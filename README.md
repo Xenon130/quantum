@@ -10,9 +10,9 @@ Quantum is intended as a minimalist turn-key solution for test and flight operat
 ## Docs
 Documentation is structured in three sections:
 
-(1) [Users Guide](https://github.com/Xenon130/quantum/wiki/Users-Guide) - how to use
-(2) [Admin Guide](https://github.com/Xenon130/quantum/wiki/Admin-Guide) - install/admin
-(3) [Developer Guide](https://github.com/Xenon130/quantum/wiki/Dev-Guide) - how to contribute
+ 1. [Users Guide](https://github.com/Xenon130/quantum/wiki/User-Guide) - how to use
+ 1. [Admin Guide](https://github.com/Xenon130/quantum/wiki/Admin-Guide) - install/admin
+ 1. [Developer Guide](https://github.com/Xenon130/quantum/wiki/Dev-Guide) - how to contribute
 
 ## License
-Quantum is released under the MIT License (see [LICENSE](https://github.com/Xenon130/quantum/blob/master/LICENSE)).
+Quantum is released under the MIT License (see [LICENSE](/quantum/blob/master/LICENSE)).
