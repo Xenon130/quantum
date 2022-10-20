@@ -1,12 +1,13 @@
 # Quantum Dockerfile
 
-FROM centos:latest
-MAINTAINER quindar@audacy.space
-LABEL vendor="Audacy"
+FROM --platform=linux/amd64 centos:7.0.1406
+MAINTAINER missionops@e-space.com
+LABEL vendor="E-Space"
 
 
 # run system update & install utils
-RUN yum -y update --setopt=tsflags=nodocs   && \
+RUN yum swap -y fakesystemd systemd && \
+	yum -y update --setopt=tsflags=nodocs && \
 	yum -y install git wget nano curl make dos2unix
 
 ##############################################################################
@@ -17,10 +18,11 @@ RUN yum -y update --setopt=tsflags=nodocs   && \
 # netdata is proxied behind nginx, and accessible at \\hostname\netdata
 # start command /usr/sbin/netdata -D -s /host -p 19999
 #
-RUN yum -y install zlib-devel libuuid-devel libmnl-devel gcc autoconf autoconf-archive autogen automake pkgconfig python tc python-yaml  && \
-	git clone https://github.com/firehol/netdata.git --depth=1    && \
+RUN yum -y install zlib-devel libuuid-devel libmnl-devel gcc autoconf autoconf-archive autogen automake pkgconfig python tc python-yaml && \
+	git clone https://github.com/firehol/netdata.git && \
 	cd netdata && \
-	./netdata-installer.sh --dont-wait --dont-start-it 
+	git checkout f8e0f3ced35509f608f360823c57c19b19eb6164 && \
+	./netdata-installer.sh --dont-wait --dont-start-it
 
 
 ##############################################################################
@@ -41,10 +43,6 @@ RUN yum -y install zlib-devel libuuid-devel libmnl-devel gcc autoconf autoconf-a
 RUN yum install -y epel-release && \
 	yum install -y nginx && \
 	mkdir -p /etc/ssl
-
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
-COPY nginx/server.crt /etc/ssl/server.crt
-COPY nginx/server.key /etc/ssl/server.key
 
 #**** install node ****
 # https://nodejs.org/en/download/package-manager/#enterprise-linux-and-fedora
@@ -80,11 +78,12 @@ RUN git clone https://www.agwa.name/git/git-crypt.git && \
 # node server should run on port 3000 > proxied via nginx to 443
 # start command: pm2 start
 
-# Create app directory	 
-RUN  mkdir -p /node 
+# Create app directory
+RUN  mkdir -p /node
 WORKDIR /node
 
 # Copy code contents and install app dependencies
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY . /node
 RUN npm install --no-save
 

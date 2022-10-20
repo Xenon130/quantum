@@ -36,6 +36,8 @@ quantum
 
     var headingType = {'name': 'Heading'};
 
+    var adminRoles = ['MD']
+
     //Function to get procedures uploaded
     function getProcedureList() {
     	return $http({
@@ -322,7 +324,7 @@ quantum
             //check for role and disable the steps if not permitted
             for(var a=0;a<psteps.length;a++){
                 psteps[a].Role = psteps[a].Role.toUpperCase();
-                if(psteps[a].Role.includes(callsign)){
+                if(psteps[a].Role.includes(callsign) || adminRoles.includes(callsign)){
                     psteps[a].status = false;
                 }else {
                     psteps[a].status = true;
@@ -701,7 +703,7 @@ quantum
 
             for(var a=0;a<psteps.length;a++){
                 psteps[a].Role = psteps[a].Role.toUpperCase();
-                if(psteps[a].Role.includes(callsign)){
+                if(psteps[a].Role.includes(callsign) || adminRoles.includes(callsign)){
                     psteps[a].status = false;
                 }else {
                     psteps[a].status = true;
@@ -786,7 +788,8 @@ quantum
         //check for role and disable the steps if not permitted
         for(var a=0;a<len;a++){
             psteps[a].Role = psteps[a].Role.toUpperCase();
-            if(psteps[a].Role.includes(callsign)){
+            // if callsign included in procedure allowed roles, OR callsign in adminRoles
+            if(psteps[a].Role.includes(callsign) || adminRoles.includes(callsign)){
                 psteps[a].status = false;
             }else {
                 psteps[a].status = true;
