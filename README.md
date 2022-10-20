@@ -15,4 +15,4 @@ Documentation is structured in three sections:
  1. [Developer Guide](https://github.com/Xenon130/quantum/wiki/Dev-Guide) - how to contribute
 
 ## License
-Quantum is released under the MIT License (see [LICENSE](/quantum/blob/master/LICENSE)).
+Quantum is released under the MIT License (see [LICENSE](/LICENSE)).
