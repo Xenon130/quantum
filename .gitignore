@@ -2,7 +2,7 @@ node_modules
 .DS_Store
 
 # secrets
-*.env
+secrets.env
 
-# nginx certs
-nginx/server*
+#commit notes
+NOTES.md
