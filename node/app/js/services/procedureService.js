@@ -41,7 +41,7 @@ quantum
     //Function to get procedures uploaded
     function getProcedureList() {
     	return $http({
-    		url: "/getProcedureList",
+    		url: "./getProcedureList",
     		method: "GET",
             params:{}
     	});
@@ -65,7 +65,7 @@ quantum
                 }
             }else {
                 $rootScope.title = "Procedure "+id+" | Quantum ";
-            }  
+            }
         }else {
             procedure.id = "";
             procedure.name = "";
@@ -105,7 +105,7 @@ quantum
     //Function to download procedure using get request with procedure index number as identifier
     function downloadProcedure(id){
         return $http({
-            url:"/getProcedureData",
+            url:"./getProcedureData",
             method: "GET",
             params: {"id": id}
         })
@@ -119,35 +119,35 @@ quantum
     //Function to save the procedure instance
     function saveProcedureInstance(id,usernamerole,lastuse,username,email,userstatus) {
         return $http({
-            url: "/saveProcedureInstance", 
+            url: "./saveProcedureInstance",
             method: "POST",
             data: {"id":id,"usernamerole":usernamerole,"lastuse":lastuse,"username":username,"email":email,"status":userstatus}
         });
     }
 
-    //Function to set the info(user name ,callsign and timestamp) when checkbox is checked 
+    //Function to set the info(user name ,callsign and timestamp) when checkbox is checked
     // or remove the info when unchecked
     function setInfo(info,id,step,usernamerole,revision,lastuse,recordedValue,steptype){
         return $http({
-            url: "/setInfo", 
+            url: "./setInfo",
             method: "POST",
             data: {"info":info,"id":id,"step":step,"usernamerole":usernamerole,"revision":revision,"lastuse":lastuse,"recordedValue":recordedValue,"steptype":steptype}
-        });  
+        });
     }
 
     //Function to save the active instance in archived instances when the last step is executed
     function setInstanceCompleted(info,id,step,usernamerole,revision,lastuse){
         return $http({
-            url: "/setInstanceCompleted", 
+            url: "./setInstanceCompleted",
             method: "POST",
             data: {"info":info,"id":id,"step":step,"usernamerole":usernamerole,"revision":revision,"lastuse":lastuse}
-        }); 
+        });
     }
 
     //Function to get procedure instance step data from database
     function getLiveInstanceData(pid,revision){
         return $http({
-            url:"/getLiveInstanceData",
+            url:"./getLiveInstanceData",
             method: "GET",
             params: {'procedureID' : pid,'currentRevision':revision}
         });
@@ -156,7 +156,7 @@ quantum
     //Function to get all the instances of a procedure
     function getAllInstances(pid){
         return $http({
-            url:"/getAllInstances",
+            url:"./getAllInstances",
             method: "GET",
             params: {'procedureID' : pid}
         });
@@ -175,7 +175,7 @@ quantum
 
                     psteps[j].index = parseFloat(psteps[j].Step);
                     psteps[j].class = "fa fa-caret-right";
-                    psteps[j].header = true; 
+                    psteps[j].header = true;
                     psteps[j].headertype = "mainheader";
                     psteps[j].headervalue = psteps[j].Step.split(".")[0];
                     psteps[j].subheadervalue = joinOp;
@@ -197,7 +197,7 @@ quantum
 
                     psteps[j].index = parseFloat(psteps[j].Step);
                     psteps[j].class = "fa fa-caret-right";
-                    psteps[j].header = true; 
+                    psteps[j].header = true;
                     psteps[j].headertype = "subheader";
                     psteps[j].subheadervalue = joinOp;
                     psteps[j].headervalue = psteps[j].Step.split(".")[0];
@@ -219,7 +219,7 @@ quantum
                     var joinOp = joinOpPre.join('');
 
                     psteps[j].index = parseFloat(psteps[j].Step);
-                    psteps[j].class = "fa fa-caret-right"; 
+                    psteps[j].class = "fa fa-caret-right";
                     psteps[j].header = false;
                     psteps[j].headertype = "listitem";
                     psteps[j].headervalue = psteps[j].Step.split(".")[0];
@@ -233,10 +233,10 @@ quantum
                     };
                     psteps[j].chkval = false;
                     psteps[j].checkbox = true;
-                }  
+                }
             }
 
-            //set type icon 
+            //set type icon
             for(var k=0;k<psteps.length;k++){
                 var typeOfStep = psteps[k].Type.replace(/\s/g, '');
                 if(typeOfStep.toUpperCase() === "HEADING"){
@@ -309,7 +309,7 @@ quantum
                     psteps[k].buttonStatus = "";
                     if(!psteps[k].hasOwnProperty("comments")){
                         psteps[k].comments = "";
-                    }                   
+                    }
                 }else if(typeOfStep.toUpperCase() === "INFO"){
                     psteps[k].typeicon = "fa fa-info-circle";
                     psteps[k].typecolor = {color:""};
@@ -436,14 +436,14 @@ quantum
                     liststeps[id].class = "fa fa-caret-right"
                     for(var i=0;i<liststeps.length;i++){
                         if(index === liststeps[i].index && liststeps[i].headertype === "listitem" ){
-                            liststeps[i].openstatus = false;   
+                            liststeps[i].openstatus = false;
                         }
                     }
                 }else if(liststeps[id].class === "fa fa-caret-right"){
                     liststeps[id].class = "fa fa-caret-down"
                     for(var i=0;i<liststeps.length;i++){
                         if(index === liststeps[i].index && liststeps[i].headertype === "listitem" ){
-                            liststeps[i].openstatus = true;   
+                            liststeps[i].openstatus = true;
                         }
                     }
                 }
@@ -453,7 +453,7 @@ quantum
         }else {
             liststeps = [];
         }
-        
+
         return liststeps;
 
     }
@@ -487,7 +487,7 @@ quantum
                         break;
                     }else {
                         newindex = newindex+1;
-                    }   
+                    }
                 }
             }else if(steps[index].headertype === "subheader" && index !== steps.length-1){
                 //steps[index].openstatus = true;
@@ -501,7 +501,7 @@ quantum
                         break;
                     }else {
                         newindex = newindex+1;
-                    }   
+                    }
                 }
                 for(var a=0;a<steps.length;a++){
                     if(steps[a].headervalue === steps[index].headervalue){
@@ -583,7 +583,7 @@ quantum
                     }else if(steps[d].headertype === 'listitem'){
                         steps[d].rowstyle = {
                             rowcolor : {backgroundColor:'#e9f6fb'}
-                        };  
+                        };
                     }
                     // steps[d].rowstyle = {
                     //     rowcolor : {backgroundColor:'#e9f6fb'}
@@ -619,7 +619,7 @@ quantum
             var linkdetails = createArrayOfString(decisiondetails,"\r\n");
             for(var k=0;k<linkdetails.length;k++){
                 var pid = createArrayOfString(linkdetails[k],':');
-                var procedurelink = '/dashboard/procedure/'+pid[1];
+                var procedurelink = './dashboard/procedure/'+pid[1];
                 procedureLinkDetails.push({
                     "link":procedurelink,
                     "pid":pid[1]
@@ -629,7 +629,7 @@ quantum
             var linkdetails = createArrayOfString(decisiondetails,"\n");
             for(var k=0;k<linkdetails.length;k++){
                 var pid = createArrayOfString(linkdetails[k],':');
-                var procedurelink = '/dashboard/procedure/'+pid[1];
+                var procedurelink = './dashboard/procedure/'+pid[1];
                 procedureLinkDetails.push({
                     "link":procedurelink,
                     "pid":pid[1]
@@ -638,7 +638,7 @@ quantum
 
         }else {
             var pid = createArrayOfString(decisiondetails,':');
-            var procedurelink = '/dashboard/procedure/'+pid[1];
+            var procedurelink = './dashboard/procedure/'+pid[1];
             procedureLinkDetails.push({
                 "link":procedurelink,
                 "pid":pid[1]
@@ -679,7 +679,7 @@ quantum
     //Function to store comments for a procedure step in database
     function setComments(pid,prevision,index,comments,lastuse){
         return $http({
-            url: "/setComments", 
+            url: "./setComments",
             method: "POST",
             data: {"pid":pid,"prevision":prevision,"index":index,"comments":comments,"lastuse":lastuse}
         });
@@ -719,7 +719,7 @@ quantum
         for(var a=0;a<currentIndex;a++){
             if(steps[a].headervalue === steps[currentIndex].headervalue && steps[a].headertype === "mainheader"){
                 sectionHeader = a;
-                break; 
+                break;
             }
         }
         if(sectionHeader >=0){
@@ -727,7 +727,7 @@ quantum
         }else {
             return -1;
         }
-        
+
     }
 
     //Function to get the next main section header index of a step
@@ -762,7 +762,7 @@ quantum
          }else {
             return -1;
          }
-       
+
     }
 
     //Function to get the next sub section index of a step
@@ -825,22 +825,22 @@ quantum
         if(locationOp1.length === 4){
             //location: /dashboard/procedure/:procID
             return $http({
-                url: "/setUserStatus", 
+                url: "./setUserStatus",
                 method: "POST",
                 data: {"email":emailaddress,"status":status,"pid":pid,"username":username,"revision":revision}
             });
         }
         else if(locationOp1.length === 6){ // if length is 6,then the current location is running instance
-            //location: /dashboard/procedure/runninginstance/:procID/:revisionID
+            //location: dashboard/procedure/runninginstance/:procID/:revisionID
             return $http({
-                url: "/setUserStatus", 
+                url: "./setUserStatus",
                 method: "POST",
                 data: {"email":emailaddress,"status":status,"pid":pid,"username":username,"revision":revision}
             });
         }else {
             // for all other locations in the application
             return $http({
-                url: "/setUserStatus", 
+                url: "./setUserStatus",
                 method: "POST",
                 data: {"email":emailaddress,"status":status,"pid":pid,"username":username,"revision":revision}
             });
@@ -850,16 +850,16 @@ quantum
     //Function to update procedure name
     function updateProcedureName(procId,newprocedurename){
         return $http({
-            url: "/updateProcedureName", 
+            url: "./updateProcedureName",
             method: "POST",
             data: {"procId":procId,"newprocedurename":newprocedurename}
-        }); 
+        });
     }
 
     //Function to get all roles used in quantum
     function getQuantumRoles(){
         return $http({
-            url:"/getQuantumRoles",
+            url:"./getQuantumRoles",
             method: "GET",
             params: {}
         });
@@ -1137,17 +1137,17 @@ quantum
     //Function to set info for section header
     function setParentsInfo(parentsArray,id,usernamerole,revision,lastuse,inputStepValues,info){
         return $http({
-            url: "/setParentsInfo", 
+            url: "./setParentsInfo",
             method: "POST",
             data: {"parentsArray":parentsArray,"id":id,"usernamerole":usernamerole,"revision":revision,"lastuse":lastuse,"inputStepValues":inputStepValues,"info":info}
-        }); 
+        });
     }
 
     function getStepHeadingName(){
         return headingType;
     }
 
-    return { 
+    return {
         procedure : procedure,
         icons : icons,
         header : header,

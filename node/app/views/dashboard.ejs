@@ -7,14 +7,14 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
 	<title ng-bind="$root.title"></title>
-    <link rel="icon" href="/media/logos/Quantum_Icon_Regular.png" type="image/png" sizes="16x16">
-	<link rel="stylesheet" href="/css/bootstrap-min.css">
-	<link rel="stylesheet" href="/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/BootSideMenu.css">
-	<link href="/css/dashboardstyles.css" rel="stylesheet">
-    <link href="/css/right_sidebar.css" rel="stylesheet">
-    <link href="/css/pagelinks.css" rel="stylesheet">
-    <link href="/css/xeditable.min.css" rel="stylesheet">
+    <link rel="icon" href="media/logos/Quantum_Icon_Regular.png" type="image/png" sizes="16x16">
+	<link rel="stylesheet" href="css/bootstrap-min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/BootSideMenu.css">
+	<link href="css/dashboardstyles.css" rel="stylesheet">
+    <link href="css/right_sidebar.css" rel="stylesheet">
+    <link href="css/pagelinks.css" rel="stylesheet">
+    <link href="css/xeditable.min.css" rel="stylesheet">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script><!-- load angular -->
     <script src="https://code.angularjs.org/1.4.8/angular-route.min.js"></script>
@@ -24,11 +24,11 @@
     <!-- Angular UI Select Script and Stylesheet -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.20.0/select.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.20.0/select.min.css" rel="stylesheet" >
-    
+
 	<!-- AngularJS Material CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.9/angular-material.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.9/angular-material.css">
-    
+
     <!-- AngularJS Material Dependencies -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
@@ -70,12 +70,14 @@
     <script src="js/services/timeService.js"></script>
     <script src="js/services/dashboardService.js"></script>
 
-    <!-- script to get user details from backend -->
+    <!-- script to get user details from backend, and
+         set relative URL base in case we're proxied on a sub directory -->
     <script>
         var user = <%- JSON.stringify(user) %>;
-        angular.element(document.getElementsByTagName('head')).append(angular.element('<base href="' + window.location.pathname + '" />'));
-
-
+        angular.element(document.getElementsByTagName('head')).prepend(
+            angular.element('<base href="' +
+            window.location.pathname.slice(0, window.location.pathname.lastIndexOf('/')) +
+            '/" />'));
     </script>
 
 </head>
@@ -89,8 +91,8 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="scripts/bootstrap.min.js"></script>
     <!-- Angular Scripts and file upload dependencies -->
-    <script type="text/javascript" src="/scripts/ng-file-upload.min.js"></script>
-    <script type="text/javascript" src="/scripts/ng-file-upload-shim.min.js"></script>
+    <script type="text/javascript" src="scripts/ng-file-upload.min.js"></script>
+    <script type="text/javascript" src="scripts/ng-file-upload-shim.min.js"></script>
 
 </body>
 </html>

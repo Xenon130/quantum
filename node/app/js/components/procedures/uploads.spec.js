@@ -117,7 +117,7 @@ describe('Test Suite for Upload Procedure Controller', function () {
                     "Type": "Action",
                     "Role": "MD",
                     "Step": "2.1.1"
-                } 
+                }
             ],
             "eventname": "Audacy Zero",
             "lastuse": "2018 - 034.11:26:50 UTC",
@@ -232,7 +232,7 @@ describe('Test Suite for Upload Procedure Controller', function () {
             userService = _userService_;
             httpBackend = _$httpBackend_;
             timeService = _timeService_;
-            
+
             spyOn($location,'url').and.returnValue('/dashboard/procedure/running/1.1');
 
             deferredProcedureList = _$q_.defer();
@@ -285,7 +285,7 @@ describe('Test Suite for Upload Procedure Controller', function () {
   		// scope.$digest();
     //     expect(procedureService.getProcedureList).toHaveBeenCalled();
     //     expect(scope.usermessage).toEqual('This file number already exists in the list with a different title.Please try uploading with a new index number!');
-    //     expect(scope.config).toEqual({});      
+    //     expect(scope.config).toEqual({});
 
     // });
 
@@ -355,7 +355,7 @@ describe('Test Suite for Upload Procedure Controller', function () {
                             "step": "2.1.1",
                             "info": ""
                         }
-         
+
                     ],
                     "closedBy": "",
                     "startedAt": "2018 - 034.11:26:49 UTC",
@@ -400,7 +400,7 @@ describe('Test Suite for Upload Procedure Controller', function () {
                         "Type": "Action",
                         "Role": "MD",
                         "Step": "2.1.1"
-                    } 
+                    }
                 ],
                 "eventname": "Audacy Zero",
                 "lastuse": "2018 - 034.11:26:50 UTC",
@@ -497,7 +497,7 @@ describe('Test Suite for Upload Procedure Controller', function () {
 
     	scope.upload_form = { $valid: true ,$setPristine : function(){}};
     	scope.config = {file: { name : '1.1 - Audacy Zero - OBC Bootup.xlsx'}};
-    
+
     	scope.submit();
   		expect(scope.upload_form).toBeDefined();
   		expect(scope.config).toBeDefined();
@@ -578,7 +578,7 @@ describe('Test Suite for Upload Procedure Controller', function () {
                             "step": "2.1.1",
                             "info": ""
                         }
-         
+
                     ],
                     "closedBy": "",
                     "startedAt": "2018 - 034.11:26:49 UTC",
@@ -623,7 +623,7 @@ describe('Test Suite for Upload Procedure Controller', function () {
                         "Type": "Action",
                         "Role": "MD",
                         "Step": "2.1.1"
-                    } 
+                    }
                 ],
                 "eventname": "Audacy Zero",
                 "lastuse": "2018 - 034.11:26:50 UTC",
@@ -699,7 +699,7 @@ describe('Test Suite for Upload Procedure Controller', function () {
 
         scope.upload_form = { $valid: true ,$setPristine : function(){}};
         scope.config = {file: { name : '1.2 - Audacy Zero - OBC Bootup.xlsx'}};
-    
+
         scope.submit();
         expect(scope.upload_form).toBeDefined();
         expect(scope.config).toBeDefined();
@@ -803,7 +803,7 @@ describe('Test Suite for Upload Procedure Controller', function () {
     //                         "step": "2.1.1",
     //                         "info": ""
     //                     }
-         
+
     //                 ],
     //                 "closedBy": "",
     //                 "startedAt": "2018 - 034.11:26:49 UTC",
@@ -848,7 +848,7 @@ describe('Test Suite for Upload Procedure Controller', function () {
     //                     "Type": "Action",
     //                     "Role": "MD",
     //                     "Step": "2.1.1"
-    //                 } 
+    //                 }
     //             ],
     //             "eventname": "Audacy Zero",
     //             "lastuse": "2018 - 034.11:26:50 UTC",
@@ -945,7 +945,7 @@ describe('Test Suite for Upload Procedure Controller', function () {
 
     //     scope.upload_form = { $valid: true ,$setPristine : function(){}};
     //     scope.config = {file: { name : '1.3 - Audacy Zero - Procedure Example.xlsx'}};
-    
+
     //     scope.submit();
     //     scope.$digest();
     //     expect(procedureService.getProcedureList).toHaveBeenCalled();
@@ -962,7 +962,7 @@ describe('Test Suite for Upload Procedure Controller', function () {
         };
         scope.config = {
             file: {
-                name :  "1.1 - Audacy Zero OBC Bootup.xlsx"
+                name: "1.1 - Audacy Zero OBC Bootup.xlsx"
             }
         };
 
@@ -979,13 +979,13 @@ describe('Test Suite for Upload Procedure Controller', function () {
         }
 
         var mockFile = {
-            "name": "1.1 - Audacy Zero OBC Bootup.xlsx", 
-            "size": 10759, 
+            "name": "1.1 - Audacy Zero OBC Bootup.xlsx",
+            "size": 10759,
             "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         };
 
         httpBackend.when('POST', '/upload').respond(200, resp);
-        scope.upload(mockFile,'034.11:26:58 UTC Taruni Gattu(VIP)');    
+        scope.upload(mockFile,'034.11:26:58 UTC Taruni Gattu(VIP)');
         httpBackend.flush();
         expect(scope.usermessage).toEqual('Success: File 1.1 - Audacy Zero OBC Bootup.xlsx uploaded.');
         expect(scope.config).toEqual({});
@@ -999,7 +999,7 @@ describe('Test Suite for Upload Procedure Controller', function () {
         };
         scope.config = {
             file: {
-                name :  "1.1 - Audacy Zero OBC Bootup.xlsx"
+                name: "1.1 - Audacy Zero OBC Bootup.xlsx"
             }
         };
 
@@ -1016,13 +1016,13 @@ describe('Test Suite for Upload Procedure Controller', function () {
         }
 
         var mockFile = {
-            "name": "1.1 - Audacy Zero OBC Bootup.xlsx", 
-            "size": 10759, 
+            "name": "1.1 - Audacy Zero OBC Bootup.xlsx",
+            "size": 10759,
             "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         };
 
         httpBackend.when('POST', '/upload').respond(200, resp);
-        scope.upload(mockFile,'034.11:26:58 UTC Taruni Gattu(VIP)');    
+        scope.upload(mockFile,'034.11:26:58 UTC Taruni Gattu(VIP)');
         httpBackend.flush();
         expect(scope.usermessage).toEqual('Error: Not a valid file.Required Columns are Step,Type,Role,Content!');
         expect(scope.config).toEqual({});
@@ -1036,7 +1036,7 @@ describe('Test Suite for Upload Procedure Controller', function () {
         };
         scope.config = {
             file: {
-                name :  "1.1 - Audacy Zero OBC Bootup.xlsx"
+                name: "1.1 - Audacy Zero OBC Bootup.xlsx"
             }
         };
 
@@ -1053,13 +1053,13 @@ describe('Test Suite for Upload Procedure Controller', function () {
         }
 
         var mockFile = {
-            "name": "1.1 - Audacy Zero OBC Bootup.xlsx", 
-            "size": 10759, 
+            "name": "1.1 - Audacy Zero OBC Bootup.xlsx",
+            "size": 10759,
             "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         };
 
         httpBackend.when('POST', '/upload').respond(200, resp);
-        scope.upload(mockFile,'034.11:26:58 UTC Taruni Gattu(VIP)');    
+        scope.upload(mockFile,'034.11:26:58 UTC Taruni Gattu(VIP)');
         httpBackend.flush();
         expect(scope.usermessage).toEqual('An error occured while uploading.Please try again!');
         expect(scope.config).toEqual({});

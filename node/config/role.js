@@ -1,4 +1,5 @@
 //Define user roles
+// https://en.wikipedia.org/wiki/Flight_controller#Common_flight_control_positions
 module.exports = {
 
     'roles' : {

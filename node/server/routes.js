@@ -30,14 +30,14 @@ module.exports = function(config, app, passport, user) {
     })
 
     // Dashboard (main view)
-    app.get('/dashboard', ensureLoggedIn('/'), function(req, res) {
+    app.get('/dashboard', ensureLoggedIn('./'), function(req, res) {
         res.render('dashboard.ejs', {
             user : req.user
         })
     })
 
     // User Info (settings)
-    app.get('/profile', ensureLoggedIn, function(req, res) {
+    app.get('/profile', ensureLoggedIn('./'), function(req, res) {
         res.render('profile.ejs', {
             user : req.user
         })
@@ -53,7 +53,7 @@ module.exports = function(config, app, passport, user) {
     app.get('/logout', function(req, res, next) {
         req.logout(function(err) {
           if (err) { return next(err); }
-          res.redirect('/');
+          res.redirect('./');
         })
       })
 
@@ -69,7 +69,7 @@ module.exports = function(config, app, passport, user) {
         },
         // call passport to authenticate user
         passport.authenticate('local', {
-            failureRedirect : '/',
+            failureRedirect : './',
             failureFlash : true
         }),
         // user authenticated, find or create in MongoDB
@@ -80,10 +80,11 @@ module.exports = function(config, app, passport, user) {
                 { "auth.email" : req.user.email},
                 req.user
             )
-            res.redirect('/dashboard');
+            res.redirect('./dashboard');
     })
 
     /* Microsoft AD Routes
+
         // SSO login request
         app.get('/login',
             passport.authenticate('azure_ad_oauth2'));
@@ -109,24 +110,15 @@ module.exports = function(config, app, passport, user) {
 
     // PROCEDURES ==================================================================
 
-    require('./models/procedure');
-    var procs =  require('./controllers/procedure.controller');
-    require('./models/user');
-    var usr   =  require('./controllers/user.controller');
+    // models & controllers
+    require('./models/user')
+    require('./models/procedure')
+    var usr   =  require('./controllers/user.controller')
+    var procs =  require('./controllers/procedure.controller')
 
-    // file storage (multer)
-    var multer  = require('multer');
-    var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, '/tmp/uploads');
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    }
-    });
-    var upload = multer({
-    storage: storage
-    });
+    // file upload (multer)
+    var multer = require('multer')
+    var upload = multer({ dest: '/tmp/quantum' })
 
     //To save procedures
     app.post('/upload',upload.single('file'),procs.uploadFile);

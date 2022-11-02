@@ -53,12 +53,12 @@
                     <div class="dropdown" ng-repeat="proc in step.dependentProcedures">
                         <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" style="cursor:pointer">
                             {{proc.id}}
-                            <md-tooltip md-direction="top" ng-show="!proc.exists">Procedure does not exist.</md-tooltip> 
+                            <md-tooltip md-direction="top" ng-show="!proc.exists">Procedure does not exist.</md-tooltip>
                             <span class="caret" ng-show="proc.exists"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" ng-show="proc.exists">
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/{{proc.id}}" ng-click="createNewProc(proc.id)" ng-show="role.cRole.callsign !== 'VIP'">Open new instance</a></li>
-                            <li role="presentation" ng-show="proc.running > 0"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/runninginstance/{{proc.id}}/{{proc.version}}/{{proc.revision}}">Open latest instance</a></li>
+                            <li role="presentation" ng-show="proc.running > 0"><a role="menuitem" tabindex="-1" href="dashboard/procedure/runninginstance/{{proc.id}}/{{proc.version}}/{{proc.revision}}">Open latest instance</a></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/running/{{proc.id}}" >Open Live index</a></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/archived/{{proc.id}}">Open Archive index</a></li>
                         </ul>
@@ -76,12 +76,12 @@
                                          <div class="dropdown" ng-repeat="proc in step.dependentProcedures">
                         <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" style="cursor:pointer">
                             {{proc.id}}
-                            <md-tooltip md-direction="top" ng-show="!proc.exists">Procedure does not exist.</md-tooltip> 
+                            <md-tooltip md-direction="top" ng-show="!proc.exists">Procedure does not exist.</md-tooltip>
                             <span class="caret" ng-show="proc.exists"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" ng-show="proc.exists">
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/{{proc.id}}" ng-click="createNewProc(proc.id)" ng-show="role.cRole.callsign !== 'VIP'">Open new instance</a></li>
-                            <li role="presentation" ng-show="proc.running > 0"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/runninginstance/{{proc.id}}/{{proc.version}}/{{proc.revision}}">Open latest instance</a></li>
+                            <li role="presentation" ng-show="proc.running > 0"><a role="menuitem" tabindex="-1" href="dashboard/procedure/runninginstance/{{proc.id}}/{{proc.version}}/{{proc.revision}}">Open latest instance</a></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/running/{{proc.id}}" >Open Live index</a></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/archived/{{proc.id}}">Open Archive index</a></li>
                         </ul>
@@ -101,12 +101,12 @@
                     <div class="dropdown" ng-repeat="proc in step.dependentProcedures">
                         <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" style="cursor:pointer">
                             {{proc.id}}
-                            <md-tooltip md-direction="top" ng-show="!proc.exists">Procedure does not exist.</md-tooltip> 
+                            <md-tooltip md-direction="top" ng-show="!proc.exists">Procedure does not exist.</md-tooltip>
                             <span class="caret" ng-show="proc.exists"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" ng-show="proc.exists">
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/{{proc.id}}" ng-click="createNewProc(proc.id)" ng-show="role.cRole.callsign !== 'VIP'">Open new instance</a></li>
-                            <li role="presentation" ng-show="proc.running > 0"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/runninginstance/{{proc.id}}/{{proc.version}}/{{proc.revision}}">Open latest instance</a></li>
+                            <li role="presentation" ng-show="proc.running > 0"><a role="menuitem" tabindex="-1" href="dashboard/procedure/runninginstance/{{proc.id}}/{{proc.version}}/{{proc.revision}}">Open latest instance</a></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/running/{{proc.id}}" >Open Live index</a></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/archived/{{proc.id}}">Open Archive index</a></li>
                         </ul>
@@ -121,12 +121,12 @@
                     <div class="dropdown" ng-repeat="proc in step.dependentProcedures">
                         <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" style="cursor:pointer">
                             {{proc.id}}
-                            <md-tooltip md-direction="top" ng-show="!proc.exists">Procedure does not exist.</md-tooltip> 
+                            <md-tooltip md-direction="top" ng-show="!proc.exists">Procedure does not exist.</md-tooltip>
                             <span class="caret" ng-show="proc.exists"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" ng-show="proc.exists">
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/{{proc.id}}" ng-click="createNewProc(proc.id)" ng-show="role.cRole.callsign !== 'VIP'">Open new instance</a></li>
-                            <li role="presentation" ng-show="proc.running > 0"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/runninginstance/{{proc.id}}/{{proc.version}}/{{proc.revision}}">Open latest instance</a></li>
+                            <li role="presentation" ng-show="proc.running > 0"><a role="menuitem" tabindex="-1" href="dashboard/procedure/runninginstance/{{proc.id}}/{{proc.version}}/{{proc.revision}}">Open latest instance</a></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/running/{{proc.id}}" >Open Live index</a></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/archived/{{proc.id}}">Open Archive index</a></li>
                         </ul>
@@ -141,12 +141,12 @@
                     <div class="dropdown" ng-repeat="proc in step.dependentProcedures">
                         <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" style="cursor:pointer">
                             {{proc.id}}
-                            <md-tooltip md-direction="top" ng-show="!proc.exists">Procedure does not exist.</md-tooltip> 
+                            <md-tooltip md-direction="top" ng-show="!proc.exists">Procedure does not exist.</md-tooltip>
                             <span class="caret" ng-show="proc.exists"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" ng-show="proc.exists">
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/{{proc.id}}" ng-click="createNewProc(proc.id)" ng-show="role.cRole.callsign !== 'VIP'">Open new instance</a></li>
-                            <li role="presentation" ng-show="proc.running > 0"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/runninginstance/{{proc.id}}/{{proc.version}}/{{proc.revision}}">Open latest instance</a></li>
+                            <li role="presentation" ng-show="proc.running > 0"><a role="menuitem" tabindex="-1" href="dashboard/procedure/runninginstance/{{proc.id}}/{{proc.version}}/{{proc.revision}}">Open latest instance</a></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/running/{{proc.id}}" >Open Live index</a></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="/dashboard/procedure/archived/{{proc.id}}">Open Archive index</a></li>
                         </ul>

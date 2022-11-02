@@ -28,7 +28,7 @@ quantum
     //set mission name for user
     function setMissionForUser(email, mission) {
         return $http({
-            url: "/setMissionForUser",
+            url: "./setMissionForUser",
             method: "POST",
             data: {"email" : email, "mission" : mission}
         });
@@ -36,7 +36,7 @@ quantum
 
     function getCurrentRole(mission) {
         return $http({
-            url: "/getCurrentRole",
+            url: "./getCurrentRole",
             method: "GET",
             params: {"email": $window.user.auth.email, "mission" : mission}
         });
@@ -44,7 +44,7 @@ quantum
 
     function getAllowedRoles(mission) {
         return $http({
-            url: "/getAllowedRoles",
+            url: "./getAllowedRoles",
             method: "GET",
             params: {"email": $window.user.auth.email, "mission" : mission}
         });
@@ -54,7 +54,7 @@ quantum
         userRole.cRole = role;
         var email = getUserEmail();
         return $http({
-            url: "/setUserRole",
+            url: "./setUserRole",
             method: "POST",
             data: {"email" : email, "role" : role, "mission" : mission}
         });
@@ -62,7 +62,7 @@ quantum
 
     function getUsers(mission) {
         return $http({
-            url: "/getUsers",
+            url: "./getUsers",
             method: "GET",
             params: { "mission" : mission }
         });
@@ -70,14 +70,14 @@ quantum
 
     function getRoles() {
         return $http({
-                url: "/getRoles",
+                url: "./getRoles",
                 method: "GET"
             });
     }
 
     function setAllowedRoles(user, roles, mission) {
         return $http({
-            url: "/setAllowedRoles",
+            url: "./setAllowedRoles",
             method: "POST",
             data: {"email" : user.auth.email, "roles" : roles, "mission": mission}
         });
@@ -85,7 +85,7 @@ quantum
 
     function getUsersCurrentRole(mission,userList){
         return $http({
-            url: "/getUsersCurrentRole",
+            url: "./getUsersCurrentRole",
             method: "GET",
             params: {"mission" : mission,"userList":userList}
         });

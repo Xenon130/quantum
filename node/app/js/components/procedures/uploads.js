@@ -4,7 +4,7 @@ quantum.controller('uploadCtrl',function($scope,$uibModal,procedureService,timeS
 
     //Function to validate the procedure upload on submission
     //This function validates if the name is in correct format and if an xlsx file is uploaded
-    $scope.submit = function(){ 
+    $scope.submit = function(){
         // Call upload if form is valid
         if($scope.upload_form.$valid) {
             if($scope.config && $scope.config.file){
@@ -17,7 +17,7 @@ quantum.controller('uploadCtrl',function($scope,$uibModal,procedureService,timeS
                             var filenameFrmDb;
                             for(var i=0;i<response.data.length;i++){
                                 filenameFrmDb = response.data[i].procedureID+" - "+response.data[i].title+'.xlsx';
-                                
+
                                 if(response.data[i].procedureID === $scope.filenames[0] && filenameFrmDb === $scope.config.file.name && response.data[i].instances.length === 0){
                                     //Condition to check if a procedure exists with the same file name and has no saved instances
                                     $scope.sameProcedure = true;
@@ -36,7 +36,7 @@ quantum.controller('uploadCtrl',function($scope,$uibModal,procedureService,timeS
                             if($scope.count === 0 && $scope.sameProcedure === false){
                                 $scope.clock = timeService.getTime();
                                 var userdetails = $scope.clock.utc +" "+$scope.name +"("+$scope.role.cRole.callsign+")";
-                                $scope.upload($scope.config.file,userdetails); 
+                                $scope.upload($scope.config.file,userdetails);
                             }else if($scope.count === 0 && $scope.sameProcedure === true){
                                 var messages = {
                                     confirmMsg: "Are you sure you want to update procedure: "+filenameFrmDb +" to procedure: "+$scope.config.file.name+" ?"
@@ -70,20 +70,20 @@ quantum.controller('uploadCtrl',function($scope,$uibModal,procedureService,timeS
         }
     }
 
-    //If the name format and if the file is an xlsx file then this function is called 
+    //If the name format and if the file is an xlsx file then this function is called
     //to validate the contents and save in the database and display success or error messages
     // Validation is executed by function in procedure.controller js file in server folder of the project
     //This function is also used to update the procedure.
     $scope.upload = function(file,userdetails) {
         Upload.upload({
-            url: '/upload', 
-            data: { 
+            url: './upload',
+            data: {
                 file : file,
                 userdetails : userdetails
-            } 
-        }).then(function (resp) { 
+            }
+        }).then(function (resp) {
             //validate success
-            if(resp.data.error_code === 0 && resp.data.err_desc === null){ 
+            if(resp.data.error_code === 0 && resp.data.err_desc === null){
                 var position = "top left";
                 var queryId = '#toaster';
                 var delay = 5000;
@@ -92,7 +92,7 @@ quantum.controller('uploadCtrl',function($scope,$uibModal,procedureService,timeS
                 if(alertstatus === true){
                     //reset the input fields on the form
                     $scope.config = {};
-                    $scope.upload_form.$setPristine(); 
+                    $scope.upload_form.$setPristine();
                 }
 
             }else if(resp.data.error_code === 0 && resp.data.err_desc === "file updated"){
@@ -495,14 +495,11 @@ quantum.controller('uploadCtrl',function($scope,$uibModal,procedureService,timeS
             //handle modal close with response
             $scope.clock = timeService.getTime();
             var userdetails = $scope.clock.utc +" "+$scope.name +"("+$scope.role.cRole.callsign+")";
-            $scope.upload($scope.config.file,userdetails); 
+            $scope.upload($scope.config.file,userdetails);
         },function () {
             //handle modal dismiss
         });
     }
 
 });
-
-
-
 

@@ -121,7 +121,7 @@ describe('Test Suite for Procedure Controller', function () {
                     "Type": "Action",
                     "Role": "MD",
                     "Step": "2.1.1"
-                } 
+                }
             ],
             "eventname": "Audacy Zero",
             "lastuse": "2018 - 034.11:26:50 UTC",
@@ -238,7 +238,7 @@ describe('Test Suite for Procedure Controller', function () {
             userService = _userService_;
             httpBackend = _$httpBackend_;
             timeService = _timeService_;
-            
+
             spyOn($location,'url').and.returnValue('/dashboard/procedure/running/1.1');
 
             deferredProcedureList = _$q_.defer();
@@ -326,7 +326,7 @@ describe('Test Suite for Procedure Controller', function () {
         };
         scope.config = {
             file: {
-                name :  "1.1 - Audacy Zero OBC Bootup.xlsx"
+                name: "1.1 - Audacy Zero OBC Bootup.xlsx"
             }
         };
 
@@ -343,16 +343,16 @@ describe('Test Suite for Procedure Controller', function () {
         }
 
         var mockFile = {
-            "name": "1.1 - Audacy Zero OBC Bootup.xlsx", 
-            "size": 10759, 
+            "name": "1.1 - Audacy Zero OBC Bootup.xlsx",
+            "size": 10759,
             "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         };
 
         var plist = [{
-            id: '1.1', 
-            title: 'Audacy Zero - Procedure Example', 
-            lastuse: '2018 - 034.11:26:50 UTC', 
-            instances: [ 
+            id: '1.1',
+            title: 'Audacy Zero - Procedure Example',
+            lastuse: '2018 - 034.11:26:50 UTC',
+            instances: [
                 {
                     "openedBy": "Taruni Gattu(VIP)",
                     "Steps": [
@@ -421,14 +421,14 @@ describe('Test Suite for Procedure Controller', function () {
                     "revision": 2,
                     "running": true
                 }
-            ], 
-            running: 1, 
+            ],
+            running: 1,
             archived: 1
-        }, 
-        {   
-            id: '1.2', 
-            title: 'Audacy Zero - OBC Bootup', 
-            lastuse: '2018 - 034.11:26:59 UTC', 
+        },
+        {
+            id: '1.2',
+            title: 'Audacy Zero - OBC Bootup',
+            lastuse: '2018 - 034.11:26:59 UTC',
             instances: [
                 {
                     "openedBy": "Taruni Gattu(VIP)",
@@ -463,8 +463,8 @@ describe('Test Suite for Procedure Controller', function () {
                         "completedAt": "",
                         "revision": 1,
                         "running": true
-                    }], 
-            running: 1, 
+                    }],
+            running: 1,
             archived: 0
         }];
 
@@ -476,7 +476,7 @@ describe('Test Suite for Procedure Controller', function () {
 
         expect(scope.showList).toBeDefined();
         scope.showList();
-       
+
         expect(scope.showList).toHaveBeenCalled();
         scope.$digest();
         expect(procedureService.getProcedureList).toHaveBeenCalled();
@@ -490,7 +490,7 @@ describe('Test Suite for Procedure Controller', function () {
         deferreddownloadProcedure.resolve({ data :file,status:200});
         scope.$digest();
       	scope.download('1.1','Audacy Zero - OBC');
-     
+
      	expect(procedureService.downloadProcedure).toHaveBeenCalledWith('1.1','Audacy Zero - OBC');
 
     });

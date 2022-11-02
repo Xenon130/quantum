@@ -148,7 +148,7 @@ describe('Test Suite for Procedure Service', function () {
             userService = _userService_;
         });
     });
- 
+
     // make sure no expectations were missed in your tests.
     afterEach(function () {
         httpBackend.verifyNoOutstandingExpectation();
@@ -225,7 +225,7 @@ describe('Test Suite for Procedure Service', function () {
                             "step": "2.1.1",
                             "info": ""
                         }
-         
+
                     ],
                     "closedBy": "",
                     "startedAt": "2018 - 034.11:26:49 UTC",
@@ -271,7 +271,7 @@ describe('Test Suite for Procedure Service', function () {
                         "Type": "Action",
                         "Role": "MD",
                         "Step": "2.1.1"
-                    } 
+                    }
                 ],
                 "eventname": "Audacy Zero",
                 "lastuse": "2018 - 034.11:26:50 UTC",
@@ -366,7 +366,7 @@ describe('Test Suite for Procedure Service', function () {
         }];
 
         var procedures;
-        httpBackend.expectGET('/getProcedureList').respond(200, result);
+        httpBackend.expectGET('./getProcedureList').respond(200, result);
 
         procedureService.getProcedureList().then( function(response){
             procedures = response.data;
@@ -780,8 +780,8 @@ describe('Test Suite for Procedure Service', function () {
     it('should be able to retrieve empty array if no procedures available from database', function () {
         var result = [];
         var procedures;
- 
-        httpBackend.expectGET('/getProcedureList').respond(200, result);
+
+        httpBackend.expectGET('./getProcedureList').respond(200, result);
 
         procedureService.getProcedureList().then( function(response){
             procedures = response.data;
@@ -800,7 +800,7 @@ describe('Test Suite for Procedure Service', function () {
     it('should be able to download a Procedure', function () {
         var result = [];
         var id = '1.1';
- 
+
         httpBackend.expectGET('/getProcedureData?id=1.1').respond(200, result);
 
         procedureService.downloadProcedure(id).then( function(response){
@@ -912,7 +912,7 @@ describe('Test Suite for Procedure Service', function () {
 
         var procedureID = '1.1';
         var currentRevision = 4;
- 
+
         httpBackend.expectGET('/getLiveInstanceData?procedureID=1.1&currentRevision=4').respond(200, result);
 
         procedureService.getLiveInstanceData(procedureID,currentRevision).then( function(response){
@@ -1025,7 +1025,7 @@ describe('Test Suite for Procedure Service', function () {
         }
         var proceduresinstances;
         var procedureID = '1.1';
- 
+
         httpBackend.expectGET('/getAllInstances?procedureID=1.1').respond(200, result);
 
         procedureService.getAllInstances(procedureID).then( function(response){
@@ -1336,7 +1336,7 @@ describe('Test Suite for Procedure Service', function () {
                             "step": "2.1.1",
                             "info": ""
                         }
-         
+
                     ],
                     "closedBy": "",
                     "startedAt": "2018 - 034.11:26:49 UTC",
@@ -1381,7 +1381,7 @@ describe('Test Suite for Procedure Service', function () {
                         "Type": "Action",
                         "Role": "MD",
                         "Step": "2.1.1"
-                    } 
+                    }
                 ]],
             "sections": [
                     {
@@ -1419,7 +1419,7 @@ describe('Test Suite for Procedure Service', function () {
                         "Type": "Action",
                         "Role": "MD",
                         "Step": "2.1.1"
-                    } 
+                    }
                 ],
                 "eventname": "Audacy Zero",
                 "lastuse": "2018 - 034.11:26:50 UTC",
@@ -1501,7 +1501,7 @@ describe('Test Suite for Procedure Service', function () {
                         "Type": "Action",
                         "Role": "MD",
                         "Step": "2.1.1"
-                    } 
+                    }
                 ]],
             "sections": [
                     {
@@ -1715,7 +1715,7 @@ describe('Test Suite for Procedure Service', function () {
                             "step": "2.1.1",
                             "info": ""
                         }
-         
+
                     ],
                     "closedBy": "",
                     "startedAt": "2018 - 034.11:26:49 UTC",
@@ -1760,7 +1760,7 @@ describe('Test Suite for Procedure Service', function () {
                         "Type": "Action",
                         "Role": "MD",
                         "Step": "2.1.1"
-                    } 
+                    }
                 ]],
             "sections": [
                     {
@@ -1798,7 +1798,7 @@ describe('Test Suite for Procedure Service', function () {
                         "Type": "Action",
                         "Role": "MD",
                         "Step": "2.1.1"
-                    } 
+                    }
                 ],
                 "eventname": "Audacy Zero",
                 "lastuse": "2018 - 034.11:26:50 UTC",
@@ -1880,7 +1880,7 @@ describe('Test Suite for Procedure Service', function () {
                         "Type": "Action",
                         "Role": "MD",
                         "Step": "2.1.1"
-                    } 
+                    }
                 ]],
             "sections": [
                     {
@@ -2080,7 +2080,7 @@ describe('Test Suite for Procedure Service', function () {
 
     });
 
-    
+
     it('should expand steps and collapse subsections on open of a section',function(){
         var procedureInput = [
             { 'Content': 'Pre-Action Safety Information', 'Type': 'Heading', 'Role': 'MD', 'Step': '1.0', 'index': 1, 'class': 'fa fa-caret-right', 'header': true, 'headertype': 'mainheader', 'headervalue': '1', 'openstatus': true, 'rowstyle': { 'rowcolor': { 'backgroundColor': '#bee4f3' }}, 'chkval': false, 'status': true,'typeicon':'','typecolor':{color:''},'contenttype':'String','buttonStatus': '','comments':'','checkbox':false,'subheadervalue': '1','sectionbtn':{ 'styles': { 'color': '' } },'parent':'','parentIndex':''},

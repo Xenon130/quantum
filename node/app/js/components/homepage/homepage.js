@@ -34,15 +34,15 @@ angular.module('quantum')
         $ctrl.locks = dashboardService.getLock();
         $ctrl.sidepanel = dashboardService.getSidePanelButton();
         dashboardService.setHeaderLocation($location.url,false,false);
-        
+
         // Function to set header styles to the header when on dashboard or home page
-    	$ctrl.setColor = function(){ 
+    	$ctrl.setColor = function(){
     		procedureService.setHeaderStyles('block','none','#ffffff','#000000','inline-block','none',$window.innerWidth);
             procedureService.setProcedureName('','',"Home");
     	}
 
         // Function to display user settings modal
-        // All its supporting function exist in userSettings js 
+        // All its supporting function exist in userSettings js
         $ctrl.showSettings = function(){
             $uibModal.open({
                 templateUrl: './js/components/homepage/userSettings.html',
@@ -62,7 +62,7 @@ angular.module('quantum')
         }
 
         // Function to display user administration modal
-        // All its supporting function exist in adminMenu js 
+        // All its supporting function exist in adminMenu js
         $ctrl.showAdminMenu = function() {
             $uibModal.open({
                 templateUrl: './js/components/homepage/adminMenu.html',
@@ -101,16 +101,16 @@ angular.module('quantum')
 
                 $mdToast.show(toast).then(function(response) {
                     if ( response == 'ok' ) {
-                    
+
                     }
                     var currentRevision = parseInt(revNum.value);
                     procedureService.setUserStatus(loc,emailaddress,$ctrl.name,$ctrl.procedure.id,currentRevision,status).then(function(response){
                         if(response.data.status === false){
-                            $window.location.href = '/logout';
+                            $window.location.href = './logout';
                         }
                     },function(error){
-                    }); 
-                    
+                    });
+
                 });
             }else {
                 var currentRevision;
@@ -123,13 +123,13 @@ angular.module('quantum')
                 if($ctrl.procedure.id !== ""){
                     procedureService.setUserStatus(loc,emailaddress,$ctrl.name,$ctrl.procedure.id,currentRevision,status).then(function(response){
                         if(response.data.status === false){
-                            $window.location.href = '/logout';
+                            $window.location.href = './logout';
                         }
                     },function(error){
 
-                    }); 
+                    });
                 }else {
-                    $window.location.href = '/logout';
+                    $window.location.href = './logout';
                 }
             }
         };
@@ -137,7 +137,7 @@ angular.module('quantum')
         //Function to display right side bar which is used to
         // upload procedures
         // view live index or archive index
-        // view user list 
+        // view user list
         // view documentation
         // Options are visible and hidden based on the page you are currently in
         $ctrl.openRightNav = function(){
@@ -146,7 +146,7 @@ angular.module('quantum')
                     $mdSidenav('right').open();
                 } else {
                     $ctrl.locks.lockRight = !$ctrl.locks.lockRight;
-                    dashboardService.setRightLock($ctrl.locks.lockRight); 
+                    dashboardService.setRightLock($ctrl.locks.lockRight);
                 }
             }else {
                 if($ctrl.locks.lockRight === false){
@@ -154,7 +154,7 @@ angular.module('quantum')
                     dashboardService.setSidePanelButton({
                         "display":"block",
                         'outline': 'none',
-                        'transform': 'translate3d(-319px, 0, 0)' ,  
+                        'transform': 'translate3d(-319px, 0, 0)' ,
                         '-webkit-transition': 'all 0.3s ease-in',
                         '-moz-transition': 'all 0.3s ease-in',
                         '-ms-transition': 'all 0.3s ease-in',
@@ -176,7 +176,7 @@ angular.module('quantum')
                         'transition': 'all 0.3s ease-in',
                         'tranisition-delay':'1s'
                     });
-                   
+
                 }
                 $ctrl.locks.lockRight = !$ctrl.locks.lockRight;
                 dashboardService.setRightLock($ctrl.locks.lockRight);
