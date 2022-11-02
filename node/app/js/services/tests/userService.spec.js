@@ -3,31 +3,31 @@ describe('Test Suite for User Service', function() {
 
 	var userService, httpBackend;
 
-    var windowMock = { user : 
-    	{_id: "594417df3d2dd966dcb43afd", 
-            azure_ad: {
-                email: "john.smith@gmail.com", 
-                name: "John Smith", 
+    var windowMock = { user :
+    	{_id: "594417df3d2dd966dcb43afd",
+            auth: {
+                email: "john.smith@gmail.com",
+                name: "John Smith",
                 id: "112313425445562239891"
             },
             missions : [
             {
                 name: "Quantum",
                 currentRole : {
-                    name: "Mission Director", 
+                    name: "Mission Director",
                     callsign: "MD"
                 },
                 allowedRoles : [
                 {
-                    name: "Mission Director", 
+                    name: "Mission Director",
                     callsign: "MD"
                 },
                 {
-                    name: "Observer", 
+                    name: "Observer",
                     callsign: "VIP"
                 },
-                { 
-                    name : 'Proxy Director', 
+                {
+                    name : 'Proxy Director',
                     callsign : 'PRX'
                 }
                 ]
@@ -40,7 +40,7 @@ describe('Test Suite for User Service', function() {
         module('quantum', function ($provide) {
         	$provide.value('$window', windowMock);
         });
- 
+
         // get your service, also get $httpBackend
         // $httpBackend will be a mock.
         inject(function (_$httpBackend_, _userService_) {
@@ -48,7 +48,7 @@ describe('Test Suite for User Service', function() {
             httpBackend = _$httpBackend_;
         });
     });
- 
+
     // make sure no expectations were missed in your tests.
     afterEach(function () {
         httpBackend.verifyNoOutstandingExpectation();
@@ -76,7 +76,7 @@ describe('Test Suite for User Service', function() {
         httpBackend.expectPOST("/setMissionForUser")
             .respond(200, {});
 
-        userService.setMissionForUser(windowMock.user.azure_ad.email, mission).then( function(response){
+        userService.setMissionForUser(windowMock.user.auth.email, mission).then( function(response){
             expect(response.status).toBe(200);
         });
 
@@ -85,7 +85,7 @@ describe('Test Suite for User Service', function() {
 
     it('userService should get the user current role', function () {
         var actualRole;
-        var role = { 
+        var role = {
             name: "Mission Director",
             callsign: "MD"
         };
@@ -108,11 +108,11 @@ describe('Test Suite for User Service', function() {
         var roles;
         var allowedRoles = [
             {
-                name: "Mission Director", 
+                name: "Mission Director",
                 callsign: "MD"
             },
             {
-                name: "Observer", 
+                name: "Observer",
                 callsign: "VIP"
             }
         ];
@@ -134,7 +134,7 @@ describe('Test Suite for User Service', function() {
 
     it('userService should be able to post the current role of the user', function () {
         var email = "john.smith@gmail.com";
-        var role = { 
+        var role = {
             name : 'Proxy Director',
             callsign : 'PRX'
         }
@@ -155,7 +155,7 @@ describe('Test Suite for User Service', function() {
         var users;
         var result = [{
             _id: "594417df3d2dd966dcb43afd",
-            azure_ad: {
+            auth: {
                 email: "john.smith@gmail.com",
                 name: "John Smith",
                 id: "112313425445562239891"

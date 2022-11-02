@@ -97,16 +97,16 @@ module.exports = function (config, User) {
           if (!req.user) {  // user is NOT logged in
             console.log('User is not logged in (req.user is undefined).')
 
-            User.findOne({ 'azure_ad.id': profile.oid }, function (err, user) {
+            User.findOne({ 'auth.id': profile.oid }, function (err, user) {
               if (err) { return done(err) }
               if (user) {
                 console.log('Found known user')
 
                 // check for user but no token (user was removed)
-                if (!user.azure_ad.token) {
-                  user.azure_ad.token = token
-                  user.azure_ad.name  = initCaps(profile.name)
-                  user.azure_ad.email = (profile.upn || '').toLowerCase()
+                if (!user.auth.token) {
+                  user.auth.token = token
+                  user.auth.name  = initCaps(profile.name)
+                  user.auth.email = (profile.upn || '').toLowerCase()
                   user.save(function (err) {
                     if (err) { return done(err) }
                     return done(null, user)
@@ -116,10 +116,10 @@ module.exports = function (config, User) {
               } else {
                 console.log('Found no user => is new')
                 const newUser            = new User()
-                newUser.azure_ad.id    = profile.oid
-                newUser.azure_ad.token = token
-                newUser.azure_ad.name  = initCaps(profile.name)
-                newUser.azure_ad.email = (profile.upn || '').toLowerCase() // pull the first email
+                newUser.auth.id    = profile.oid
+                newUser.auth.token = token
+                newUser.auth.name  = initCaps(profile.name)
+                newUser.auth.email = (profile.upn || '').toLowerCase() // pull the first email
                 newUser.save(function (err) {
                   if (err) { return done(err) }
                   return done(null, newUser)
@@ -129,10 +129,10 @@ module.exports = function (config, User) {
           } else { // user exists and is logged in, link accounts
             console.log('User is logged in')
             const user            = req.user // pull user info from session
-            user.azure_ad.id    = profile.oid
-            user.azure_ad.token = token
-            user.azure_ad.name  = initCaps(profile.name)
-            user.azure_ad.email = (profile.upn || '').toLowerCase() // pull the first email
+            user.auth.id    = profile.oid
+            user.auth.token = token
+            user.auth.name  = initCaps(profile.name)
+            user.auth.email = (profile.upn || '').toLowerCase() // pull the first email
             user.save(function (err) {
               if (err) { return done(err) }
               return done(null, user)

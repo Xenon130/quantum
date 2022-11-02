@@ -13,3 +13,4 @@ require('./server/routes')(config, app, passport, user)
 app.listen(app.get('port'), function () {
   console.log(`App is running port ${app.get('port')}`)
 })
+

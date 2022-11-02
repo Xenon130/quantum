@@ -74,6 +74,10 @@ module.exports = function(config, app, passport, user) {
         }),
         // user authenticated, find or create in MongoDB
         function(req, res) {
+            // if no OIDC id exists we're on local -> use mongo _id
+            if (req.user.auth.id == null){
+                req.user.auth.id = req.user._id
+            }
             console.log(`User login: ${req.user}`)
             console.log(`SessionID : ${req.sessionID}`)
             req.user = user.findOneOrCreate(
@@ -101,7 +105,7 @@ module.exports = function(config, app, passport, user) {
         // Remove user?
         app.get('/unlink/azureadoauth2', isLoggedIn, function(req, res) {
             var user = req.user;
-            user.azure_ad.token = undefined;
+            user.auth.token = undefined;
             user.save(function(err) {
                 res.redirect('/dashboard');
             });
