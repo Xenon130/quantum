@@ -86,15 +86,22 @@ module.exports = function (config, mongoose) {
   const User = mongoose.model('User', userSchema)
 
   // if using local strategy and no user exists yet, create one from config
-  const sysAdmin = {email : config.auth.clientID, name : 'Sys Admin' }
-  const password = config.auth.clientSecret
-
   if (config.auth.provider.toLowerCase() == 'mongo') {
-    User.findOne({email: sysAdmin.email}, function(err,obj) {
+    User.findOne({}, function(err,obj) {
       if (obj == null) {
+
+        const emailAdmin  = config.auth.clientID
+        const emailDomain = emailAdmin.slice(emailAdmin.indexOf("@"))
+        const emailUser   = 'sys.user' + emailDomain
+        const password    = config.auth.clientSecret
+        const sysAdmin    = {email : emailAdmin, name : 'Sys Admin' }
+        const sysUser     = {email : emailUser,  name : 'Sys User'  }
+
         User.register({auth:sysAdmin}, password)
-        console.log(`Created 1st User:`)
-        console.log(sysAdmin)
+        User.register({auth:sysUser}, password)
+        console.log(`::: Created 1st User ::: ${sysAdmin.email}`)
+        console.log(`::: Created 2nd User ::: ${sysUser.email}`)
+
       }
      })
   }

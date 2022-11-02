@@ -11,7 +11,7 @@ Quantum is intended as a minimalist turn-key solution for test and flight operat
 Documentation is structured in three sections:
 
  1. [Users Guide](https://github.com/Xenon130/quantum/wiki/User-Guide) - how to use
- 1. [Admin Guide](https://github.com/Xenon130/quantum/wiki/Admin-Guide) - install/admin
+ 1. [Admin Guide](https://github.com/Xenon130/quantum/wiki/Admin-Guide) - how to install/admin
  1. [Developer Guide](https://github.com/Xenon130/quantum/wiki/Dev-Guide) - how to contribute
 
 ## License

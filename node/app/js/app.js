@@ -4,10 +4,10 @@ var quantum = angular.module('quantum',
 quantum.constant('moment', moment);
 
 // routes
+// running angular is subdir: https://github.com/angular/angular.js/issues/2805
 // Use *absolute* paths for "when" (will auto-prepend with <base>)
 // Use *relative* paths for "templateURL" (will auto-prepend with <base>)
 quantum.config(function($routeProvider, $locationProvider) {
-
 	$routeProvider
 
 	// route for the dashboard page with procedures list
@@ -54,6 +54,24 @@ quantum.config(function($routeProvider, $locationProvider) {
 
 	$locationProvider.html5Mode(true);
 });
+
+/* uncomment to debug / monitor routing issues
+quantum.run([
+	'$rootScope',
+	function($rootScope) {
+	  // see what's going on when the route tries to change
+	  $rootScope.$on('$routeChangeStart', function(event, next, current) {
+		// next is an object that is the route that we are starting to go to
+		// current is an object that is the route where we are currently
+		var currentPath = null
+		var nextPath = null
+		if (current){ currentPath = current.originalPath; }
+		if (next   ){ nextPath = next.originalPath;       }
+		console.log('Leaving:: %s, Loading :: %s', currentPath, nextPath);
+	  });
+	}
+  ]);
+*/
 
 quantum.run(['editableOptions', function(editableOptions) {
   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'

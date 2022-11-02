@@ -346,27 +346,37 @@ quantum
                 steps[a].dependentProcedures = [];
                 var listOfProcs = [];
                 var dependentProcedures = getDependentProcedures(steps[a]);
-                for(var b=0;b<dependentProcedures.length;b++){
-                    for(var c=0;c<procList.length;c++){
-                        if(dependentProcedures[b] === procList[c].procedureID){
-                            if(procList[c].instances.length > 0){
-                                var running = 0;
-                                var latestInstance;
-                                for(var i=0;i<procList[c].instances.length;i++){
-                                    if(procList[c].instances[i].running === true){
-                                        running++;
-                                        latestInstance = procList[c].instances[i].revision;
+                if (dependentProcedures){
+                    for(var b=0;b<dependentProcedures.length;b++){
+                        for(var c=0;c<procList.length;c++){
+                            if(dependentProcedures[b] === procList[c].procedureID){
+                                if(procList[c].instances.length > 0){
+                                    var running = 0;
+                                    var latestInstance;
+                                    for(var i=0;i<procList[c].instances.length;i++){
+                                        if(procList[c].instances[i].running === true){
+                                            running++;
+                                            latestInstance = procList[c].instances[i].revision;
+                                        }
                                     }
-                                }
 
-                                if(running > 0){
-                                    listOfProcs.push({
-                                        "id":procList[c].procedureID,
-                                        "version":procList[c].versions.length,
-                                        "revision":latestInstance,
-                                        "running":running,
-                                        "exists":true
-                                    });
+                                    if(running > 0){
+                                        listOfProcs.push({
+                                            "id":procList[c].procedureID,
+                                            "version":procList[c].versions.length,
+                                            "revision":latestInstance,
+                                            "running":running,
+                                            "exists":true
+                                        });
+                                    }else {
+                                        listOfProcs.push({
+                                            "id":procList[c].procedureID,
+                                            "version":procList[c].versions.length,
+                                            "revision":"",
+                                            "running":0,
+                                            "exists":true
+                                        });
+                                    }
                                 }else {
                                     listOfProcs.push({
                                         "id":procList[c].procedureID,
@@ -376,23 +386,15 @@ quantum
                                         "exists":true
                                     });
                                 }
-                            }else {
+                            }else if(c === procList.length -1 && dependentProcedures[b] !== procList[c].procedureID && ifFound(listOfProcs,dependentProcedures[b]) === false){
                                 listOfProcs.push({
-                                    "id":procList[c].procedureID,
-                                    "version":procList[c].versions.length,
+                                    "id":dependentProcedures[b],
+                                    "version":"",
                                     "revision":"",
                                     "running":0,
-                                    "exists":true
+                                    "exists":false
                                 });
                             }
-                        }else if(c === procList.length -1 && dependentProcedures[b] !== procList[c].procedureID && ifFound(listOfProcs,dependentProcedures[b]) === false){
-                            listOfProcs.push({
-                                "id":dependentProcedures[b],
-                                "version":"",
-                                "revision":"",
-                                "running":0,
-                                "exists":false
-                            });
                         }
                     }
                 }
