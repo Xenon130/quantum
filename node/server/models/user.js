@@ -60,8 +60,8 @@ module.exports = function (config, mongoose) {
           hashField: 'auth.token',      // custom password field
           saltField: 'auth.salt'        // custom salt field
         })
-      //console.log(userSchema.statics)
-      //console.log(userSchema.statics.serializeUser.toString())
+      // console.log(userSchema.statics)
+      // console.log(userSchema.statics.serializeUser.toString())
       break
 
     case 'microsoft':
@@ -77,11 +77,11 @@ module.exports = function (config, mongoose) {
       userSchema.statics.createStrategy = function (config) {
         const strategy = new passportAzureADoauth2(
           {
-            clientID          : config.auth.clientID,
-            clientSecret      : config.auth.clientSecret,
-            tenantID          : config.auth.tenantID,
-            callbackURL       : config.auth.callbackURL,
-            passReqToCallback : true
+            clientID: config.auth.clientID,
+            clientSecret: config.auth.clientSecret,
+            tenantID: config.auth.tenantID,
+            callbackURL: config.auth.callbackURL,
+            passReqToCallback: true
           },
           /** callback executed after authentication attempt on AzureAD
            *
@@ -92,44 +92,44 @@ module.exports = function (config, mongoose) {
            * @param {*} next    - next function in call stack (either fail or success fct)
            */
           function (req, res, param, profile, next) {
+            // decode token and add to profile object
+            profile  = { ...profile, ...jwt.decode(res) }
 
-              // decode token and add to profile object
-              profile  = {...profile, ...jwt.decode(res)}
-
-              // assemble user mongo document (in case of new user)
-              userInfo = {
-                auth : {
-                  id    : profile.oid,
-                  token : res,
-                  email : profile.unique_name,
-                  name: `${profile.given_name} ${profile.family_name}`
-                }
+            // assemble user mongo document (in case of new user)
+            let userInfo = {
+              auth: {
+                id: profile.oid,
+                token: res,
+                email: profile.unique_name,
+                name: `${profile.given_name} ${profile.family_name}`
               }
+            }
 
-              // find or create user in quantum db, and return
-              // "user._id" which is used in session serialization
-              userInfo = User.findOneOrCreate(
-                { 'auth.email': profile.unique_name },
-                userInfo
-              ).then(userInfo => {
-                console.log("Quantum User found/created:")
+            // find or create user in quantum db, and return
+            // "user._id" which is used in session serialization
+            userInfo = User.findOneOrCreate(
+              { 'auth.email': profile.unique_name },
+              userInfo
+            ).then(userInfo => {
+              if (config.node.environ === 'development') {
+                console.log('Quantum User found/created:')
                 console.log(`${userInfo.auth.email} : ${userInfo._id}`)
-
-                // call next fct in stack: function(err, user, info)
-                // console.log(next.toString())
-                next(undefined, userInfo)
-              })
-
+                console.log('next function is')
+                console.log(next.toString())
+              }
+              // call next fct in stack: function(err, user, info)
+              next(undefined, userInfo)
+            })
           }
         )
         return strategy
       }
-      userSchema.statics.serializeUser = function() {
+      userSchema.statics.serializeUser = function () {
         return function (user, done) {
           done(null, user.id)
         }
       }
-      userSchema.statics.deserializeUser = function() {
+      userSchema.statics.deserializeUser = function () {
         return function (id, done) {
           User.findById(id, function (err, user) {
             done(err, user)
@@ -137,8 +137,8 @@ module.exports = function (config, mongoose) {
         }
       }
 
-      //console.log(userSchema.statics)
-      //console.log(userSchema.statics.serializeUser.toString())
+      // console.log(userSchema.statics)
+      // console.log(userSchema.statics.serializeUser.toString())
       break
 
     default:
@@ -173,9 +173,8 @@ module.exports = function (config, mongoose) {
   // create the mongoose model for users
   const User = mongoose.model('User', userSchema)
 
-  // FIXME - first user creation & permissions using AzureAD
   // if using local strategy and no users exists yet, create from config
-  if (config.auth.provider.toLowerCase() == 'mongo') {
+  if (config.auth.provider.toLowerCase() === 'mongo') {
     User.findOne({}, function (err, obj) {
       if (obj == null) {
         const emailAdmin  = config.auth.clientID

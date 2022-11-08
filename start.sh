@@ -10,7 +10,7 @@
 #
 
 # default credentials / config
-export NODE_ENV='development'
+export NODE_ENV=development
 
 export MONGO_DB_URL='mongodb://localhost:27017/quantum'
 export MONGO_DB_USR=
@@ -24,33 +24,35 @@ export AUTH_CLIENT_SECRET='2infinity'
 
 # load secrets file if available
 if [ -f ./secrets.env ]; then
+	set -a
     source ./secrets.env
+	set +a
 fi
 
 
 # --------------------------------------------------------------
 
 # run local (debug mode)
-if [ $1 = "debug" ]; then
+if [ "$1" = "debug" ]; then
+	export NODE_ENV='development'
+	echo "Starting DEBUG mode"
 	node node/server.js
 
 
 # run container
 else
-	echo "stopping old instance ..."
+	echo "Stopping old instances ..."
 	docker stop quantum > /dev/null 2>&1
 	docker rm   quantum > /dev/null 2>&1
 
 	# production mode
-	if [ $1 = "production" ]; then
-		echo "starting production instance ..."
-		export NODE_ENV=production
+	if [ "$1" = "production" ]; then
+		echo "Starting PRODUCTION mode"
 		echo "EXIT - not yet implemented"
 
 	# developer mode (default)
 	else
-		echo "starting new dev instance ..."
-		export NODE_ENV=development
+		echo "Starting DEVELOPER mode"
 
 		docker run -d -t 		\
 		 --name quantum         \

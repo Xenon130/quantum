@@ -9,7 +9,6 @@ const passport = require('passport')
  *
  */
 module.exports = function (config, User) {
-
   // config passport using static methods created in user.js
 
   passport.use(User.createStrategy(config))
@@ -17,5 +16,4 @@ module.exports = function (config, User) {
   passport.deserializeUser(User.deserializeUser())
 
   return passport
-
 }
