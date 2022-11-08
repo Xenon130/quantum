@@ -11,7 +11,6 @@
 
 # default credentials / config
 export NODE_ENV='development'
-export NODE_URL=
 
 export MONGO_DB_URL='mongodb://localhost:27017/quantum'
 export MONGO_DB_USR=

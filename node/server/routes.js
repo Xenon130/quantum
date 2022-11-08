@@ -48,6 +48,7 @@ module.exports = function(config, app, passport, user) {
     // ******************************************************************************
 
     // AUTHENTICATION ===============================================================
+    // NOTE: use relative urls in redirects
 
     // Logout
     app.get('/logout', function(req, res, next) {
@@ -87,30 +88,18 @@ module.exports = function(config, app, passport, user) {
             res.redirect('./dashboard');
     })
 
-    /* Microsoft AD Routes
+    // "Microsoft" strategy login request
+    app.get('/login_oauth2',
+        passport.authenticate('azure_ad_oauth2'))
 
-        // SSO login request
-        app.get('/login',
-            passport.authenticate('azure_ad_oauth2'));
-
-        // SSO callback (redirect)
-        app.get('/redirect',
-            passport.authenticate('azure_ad_oauth2', { failureRedirect: '/login' }),
-            function (req, res) {
-                console.log("User authenticated OK")
-                res.redirect('/dashboard')
-            }
-        )
-
-        // Remove user?
-        app.get('/unlink/azureadoauth2', isLoggedIn, function(req, res) {
-            var user = req.user;
-            user.auth.token = undefined;
-            user.save(function(err) {
-                res.redirect('/dashboard');
-            });
-        });
-    */
+    // "Microsoft" strategy callback (redirect)
+    app.get('/redirect',
+        passport.authenticate('azure_ad_oauth2', { failureRedirect: './login' }),
+        function (req, res) {
+            console.log("User authenticated OK")
+            res.redirect('./dashboard')
+        }
+    )
 
     // PROCEDURES ==================================================================
 

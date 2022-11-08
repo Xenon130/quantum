@@ -20,7 +20,6 @@ const fs    = require('fs')
 const fpath = './app/media/quantum.banner'
 const data  = fs.readFileSync(fpath, { encoding: 'utf8', flag: 'r' })
 console.log(data)
-console.log(' > NODE_URL            : ' + process.env.NODE_URL)
 console.log(' > NODE_ENV            : ' + process.env.NODE_ENV)
 console.log(' > MONGO_DB_URL        : ' + process.env.MONGO_DB_URL)
 console.log(' > MONGO_DB_USR        : ' + process.env.MONGO_DB_USR)
@@ -40,7 +39,6 @@ module.exports = function (basePath) {
   const myconfig = {
     node: {
       environ: process.env.NODE_ENV,
-      baseURL: process.env.NODE_URL,
       host   : process.env.HOSTNAME,
       path   : basePath,
       morgan : 'dev'
