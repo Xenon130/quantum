@@ -34,6 +34,16 @@ fi
 
 # run local (debug mode)
 if [ "$1" = "debug" ]; then
+
+	# make sure node.js is loaded
+	if [ -z "which node" ]; then
+		echo "Installing node ..."
+		curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+		. ~/.nvm/nvm.sh
+		nvm install 16.0.0
+	fi
+
+	# run quantum on the host
 	export NODE_ENV='development'
 	echo "Starting DEBUG mode"
 	node node/server.js
@@ -52,17 +62,24 @@ else
 
 	# developer mode (default)
 	else
-		echo "Starting DEVELOPER mode"
-
+		echo -n "Starting DEVELOPER mode "
 		docker run -d -t 		\
 		 --name quantum         \
 		 --env-file secrets.env \
 		 -v $(pwd)/node:/node/  \
 		 -p 3000:3000           \
 		 xenon130/quantum > /dev/null
-
 	fi
 
+	# wait 5 seconds
+	for i in 1 2 3
+	do
+		sleep 1.5s
+		echo -n "."
+	done
+	echo " "
+
+	# show status
 	printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
 	docker ps -a
 	printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
