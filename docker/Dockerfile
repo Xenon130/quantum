@@ -5,14 +5,13 @@
 FROM --platform=linux/amd64 redhat/ubi9
 RUN  yum swap -y fakesystemd systemd && \
 	 yum -y update --setopt=tsflags=nodocs && \
-	 yum -y install git wget nano make dos2unix 
-
+	 yum -y install git wget nano make dos2unix
 
 
 ## install node.js
 
 ### https://nodejs.org/en/download/package-manager/#enterprise-linux-and-fedora
-### 
+###
 ### start command: pm2-docker start $APP --watch &
 ### where $APP is the main file name (e.g. server.js) or can be specified at runtime
 ### for options to the --watch flag, add a config.json file to the build
@@ -31,7 +30,6 @@ RUN yum -y install nodejs  && \
 RUN pm2 install pm2-logrotate && \
 	pm2 set pm2-logrotate:compress true && \
 	pm2 set pm2-logrotate:retain 7
-
 
 
 ## deploy quantum app
@@ -57,11 +55,13 @@ ARG ENVIRONMENT
 ENV ENVIRONMENT ${ENVIRONMENT}
 
 
-##############################################################################	
-	
+##############################################################################
+
 #**** start servers with container deploy
 # the last command can't exit, or the container will shutdown
+# to debug see https://vsupalov.com/debug-docker-container/
+# (1) if exited : add "docker run [...] --entrypoint /bin/bash <image_name>"
+# (2) if running: docker exec -it <container_id> /bin/bash
 
 EXPOSE 3000
-CMD pm2 start ecosystem.config.js --env ${ENVIRONMENT} --no-daemon &
-	
+CMD pm2 start server.js --env ${ENVIRONMENT} --no-daemon &

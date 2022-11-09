@@ -6,3 +6,6 @@ secrets.env
 
 #commit notes
 NOTES.md
+
+# pm2 logs/dumps
+*/.pm2/*

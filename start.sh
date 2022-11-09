@@ -2,11 +2,12 @@
 
 # run mode is passed as an argument:
 #
-#	mode			        | source	|	execution
+#	mode			        | source	|	execution  | exec
 #	------------------------------------------------------------
-# 	debug		         	| host		|	host
-# 	development (default)	| host		|	container
-# 	production		        | container |	container
+# 	debug		         	| host		|	host       | node
+# 	debug2		         	| host		|	host       | pm2
+# 	development (default)	| host		|	container  | pm2
+# 	production		        | container |	container  | pm2
 #
 
 # default credentials / config
@@ -33,9 +34,9 @@ fi
 # --------------------------------------------------------------
 
 # run local (debug mode)
-if [ "$1" = "debug" ]; then
+if [ "$1" = "debug" ] || [ "$1" = "debug2" ]; then
 
-	# make sure node.js is loaded
+	# make sure node.js is installed /loaded
 	if [ -z "which node" ]; then
 		echo "Installing node ..."
 		curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
@@ -43,10 +44,35 @@ if [ "$1" = "debug" ]; then
 		nvm install 16.0.0
 	fi
 
-	# run quantum on the host
-	export NODE_ENV='development'
-	echo "Starting DEBUG mode"
-	node node/server.js
+	# run quantum on the host using node
+	if [ "$1" = "debug" ]; then
+		export NODE_ENV='development'
+		echo "Starting DEBUG mode / running node"
+		node node/server.js
+
+	# run quantum on the host using pm2
+	else
+		cd node
+		# make sure pm2 is installed
+		if [ -z "which pm2" ]; then
+			echo "Installing prerequisites ..."
+			npm install -g express
+			npm install -g pm2 && pm2 update
+			pm2 install pm2-logrotate
+			pm2 set pm2-logrotate:compress true
+			pm2 set pm2-logrotate:retain 5
+		fi
+
+		export NODE_ENV='development'
+		echo "Starting DEBUG mode / running pm2"
+		pm2 start pm2.config.js
+		echo ""
+		echo "> stream logs  : pm2 logs quantum"
+		echo "> exit app     : pm2 stop quantum"
+		echo "> monitor app  : pm2 monit"
+		echo ""
+		cd ..
+	fi
 
 
 # run container
@@ -68,7 +94,7 @@ else
 		 --env-file secrets.env \
 		 -v $(pwd)/node:/node/  \
 		 -p 3000:3000           \
-		 xenon130/quantum > /dev/null
+		 --entrypoint /bin/bash xenon130/quantum > /dev/null
 	fi
 
 	# wait 5 seconds
