@@ -100,12 +100,13 @@ quantum
     }
 
     function setActiveUsers(activeUsers){
+
         var userLen = activeUsers.length;
         var userList = [];
         var currentUserEmail = getUserEmail();
         //for loop to get all the current users
         for(var i=0;i<userLen;i++){
-            if(activeUsers[i].status === true && activeUsers[i].email !== currentUserEmail){
+            if(activeUsers[i].status === true && activeUsers[i].email ){
                 var userdetails = new Object();
                 userdetails.name = activeUsers[i].name;
                 userdetails.status = activeUsers[i].status;
