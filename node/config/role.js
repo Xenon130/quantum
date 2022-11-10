@@ -3,11 +3,25 @@
 module.exports = {
 
     'roles' : {
+
+		// lead roles (only one at a time, full admin)
+	    'FLIGHT' : {
+	    	'name' : 'Flight Director',
+	    	'callsign' : 'FLIGHT',
+	    	'multiple' : false
+	    },
 	    'MD' : {
 	    	'name' : 'Mission Director',
 	    	'callsign' : 'MD',
 	    	'multiple' : false
 	    },
+	    'TD' : {
+	    	'name' : 'Test Director',
+	    	'callsign' : 'TD',
+	    	'multiple' : false
+	    },
+
+		// follow roles (can be multiple, e.g. CC1, CC2, etc.)
 	    'CC' : {
 	    	'name' : 'Spacecraft Communications Controller',
 	    	'callsign' : 'CC',
@@ -34,8 +48,13 @@ module.exports = {
 	    	'multiple' : true
 	    },
 	    'PROXY' : {
-	    	'name' : 'Proxy Services and Encyption Specialist',
+	    	'name' : 'Network and Encyption Specialist',
 	    	'callsign' : 'PROXY',
+	    	'multiple' : true
+	    },
+	    'TECH' : {
+	    	'name' : 'Technician',
+	    	'callsign' : 'TECH',
 	    	'multiple' : true
 	    },
 	    'SIM' : {

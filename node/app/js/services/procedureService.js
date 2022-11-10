@@ -36,7 +36,10 @@ quantum
 
     var headingType = {'name': 'Heading'};
 
-    var adminRoles = ['MD']
+    // roles with admin access (can check off any step)
+    // TODO should parse these from the /node/config/roles.js file
+    // sp that any role with 'multiple false' is added here.
+    var adminRoles = ['FLIGHT', 'MD','TD']
 
     //Function to get procedures uploaded
     function getProcedureList() {
