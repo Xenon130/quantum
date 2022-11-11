@@ -38,7 +38,7 @@
             </tr>
         </thead>
         <tbody class="details">
-            <tr ng-repeat="step in steps" ng-show="step.openstatus" ng-style="step.rowstyle.rowcolor">
+            <tr id="{{'step-'+$index}}" ng-repeat="step in steps" ng-show="step.openstatus" ng-style="step.rowstyle.rowcolor"  data-ng-init="showNextStep($index,step)">
                 <td style="border-top:1px solid #fff;border-bottom:1px solid #fff">
                     <a href="#" ng-click="showPList($index,step.index,step.headertype,step.Type)">
                     <span class="{{step.class}}" ng-style="step.sectionbtn.styles"></span></a>

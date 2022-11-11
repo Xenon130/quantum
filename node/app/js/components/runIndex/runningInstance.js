@@ -1,4 +1,4 @@
-quantum.controller('runningInstanceCtrl', function($scope,procedureService,$routeParams,userService,timeService,$interval,$window,dashboardService,$location,$uibModal,$mdSidenav,$rootScope) {
+quantum.controller('runningInstanceCtrl', function runningInstanceCtrl ($scope,procedureService,$routeParams,userService,timeService,$interval,$window,dashboardService,$location,$uibModal,$mdSidenav,$rootScope) {
     $scope.params = $routeParams;
     $scope.role = userService.userRole;
     $scope.name = userService.getUserName();
@@ -27,7 +27,6 @@ quantum.controller('runningInstanceCtrl', function($scope,procedureService,$rout
     dashboardService.setHeaderLocation($location.url,true,true,true);
     viewProcedure();
     $scope.running = true;
-
 
     //Function to display right side bar which is used to
     // upload procedures
@@ -885,6 +884,21 @@ quantum.controller('runningInstanceCtrl', function($scope,procedureService,$rout
 
             }
         });
+    }
+
+    /** function to expand sections with open steps on load
+     *
+     * @param {*} index - position of step in list
+     * @param {*} step  - info about current step
+     *
+     * uses data-ng-init="showNextStep(step)" in each step row to determine
+     * if it is a heading and should be collapsed or open when page loads
+     */
+    $scope.showNextStep = function (index,step){
+        if (step.Type == 'Heading' && step.chkval == false){
+            $scope.showPList(index,step.index,step.headertype,step.Type)
+            var id = 'step-' + index
+        }
     }
 
 });
