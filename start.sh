@@ -55,7 +55,6 @@ fi
 
 # run quantum on the host using node
 if [ "$1" = "debug" ]; then
-	export NODE_ENV='development'
 	echo "Starting DEBUG mode / running node"
 	node node/server.js
 	exit 0
@@ -63,9 +62,7 @@ fi
 
 # run quantum on the host using pm2
 if [ "$1" = "pm2" ]; then
-
 	cd node
-	export NODE_ENV='development'
 	echo "Starting DEBUG mode / running pm2"
 	pm2 start pm2.config.js
 	pm2 show quantum
@@ -81,8 +78,8 @@ if [ "$1" = "docker" ]; then
 	docker stop quantum > /dev/null 2>&1
 	docker rm   quantum > /dev/null 2>&1
 
-	echo -n "Starting DEVELOPER mode "
-	docker run -d -t 		\
+	echo -n "Starting DEVELOPER mode (local source) "
+	docker run -d -t 		   \
 		--name quantum         \
 		--env-file secrets.env \
 		-v $(pwd)/node:/node/  \

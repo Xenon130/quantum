@@ -12,16 +12,20 @@ else
 	sudo yum install docker
 	sudo groupadd docker
 	sudo usermod -aG docker $USER
+	sudo systemctl enable docker.service
+	sudo systemctl enable containerd.service
 fi
-sudo systemctl enable docker.service
-sudo systemctl enable containerd.service
-sudo systemctl start docker
-
 
 # build app container
+sudo systemctl start docker
+
+echo "Stopping old instances ..."
+docker stop quantum > /dev/null 2>&1
+docker rm   quantum > /dev/null 2>&1
 
 echo "building quantum image ..."
 sudo docker rmi xenon130/quantum
 sudo docker build -t xenon130/quantum -f docker/Dockerfile node
+
 echo "---------------------------------------------------------------------------"
 sudo docker image ls

@@ -1,5 +1,6 @@
 
-## Quantum Dockerfile
+# Quantum Dockerfile
+
 ## base system & updates
 
 FROM --platform=linux/amd64 redhat/ubi9
@@ -8,13 +9,7 @@ RUN  yum swap -y fakesystemd systemd && \
 	 yum -y install git wget nano make dos2unix
 
 
-## install node.js
-
-### https://nodejs.org/en/download/package-manager/#enterprise-linux-and-fedora
-###
-### start command: pm2-docker start $APP --watch &
-### where $APP is the main file name (e.g. server.js) or can be specified at runtime
-### for options to the --watch flag, add a config.json file to the build
+## install node.js & pm2
 
 RUN yum -y install nodejs  && \
 	yum -y update --setopt=tsflags=nodocs && \
@@ -24,44 +19,35 @@ RUN yum -y install nodejs  && \
 	npm install -g pm2 \
 	npm install -g express
 
-
 ## install logrotate for pm2
 
 RUN pm2 install pm2-logrotate && \
 	pm2 set pm2-logrotate:compress true && \
 	pm2 set pm2-logrotate:retain 7
 
+## deploy quantum app from host into container
 
-## deploy quantum app
-
-### create a directory node and copy the source code under /node
-### node server should run on port 3000
-### start command: pm2 start
-
-# Create app directory
 RUN  mkdir -p /node
 WORKDIR /node
-
-# Copy code contents and install app dependencies
 COPY . /node
 RUN npm install --no-save
 
-# create a directory to store the uploaded files
-RUN  mkdir -p /tmp/uploads
-
-#**** add build argument to environment variable ****
-# only environment variables can be used in CMD commands
-ARG ENVIRONMENT
-ENV ENVIRONMENT ${ENVIRONMENT}
-
-
-##############################################################################
-
-#**** start servers with container deploy
-# the last command can't exit, or the container will shutdown
-# to debug see https://vsupalov.com/debug-docker-container/
-# (1) if exited : add "docker run [...] --entrypoint /bin/bash <image_name>"
-# (2) if running: docker exec -it <container_id> /bin/bash
+# environment variables
+# https://vsupalov.com/docker-arg-env-variable-guide/
+#
+# - not required/used during image build
+# - passed with docker run command via secret.env file
+# - not required/used during app start (uses shell env)
 
 EXPOSE 3000
-CMD pm2 start server.js --env ${ENVIRONMENT} --no-daemon &
+
+# start node server (pm2 process)
+# https://vsupalov.com/debug-docker-container/
+#
+# the last command can't exit, or the container will shutdown
+#
+# to debug:
+# (1) if exited : add "docker run [...] --entrypoint /bin/bash <image_name>"
+# (2) if running: docker exec -it quantum /bin/bash
+
+CMD pm2-runtime start pm2.config.js
