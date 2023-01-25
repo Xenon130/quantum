@@ -11,16 +11,16 @@ module.exports = {
                 console.log("Error finding procedures data in DB: " + err);
             }
             if(procdata){
-                res.send(procdata); 
+                res.send(procdata);
             }
-           
+
         });
     },
     getProcedureData: function(req,res){
         var id = req.query.id;
 
         ProcedureModel.findOne( { 'procedureID' : id }, function(err, model) {
-            if(err){ 
+            if(err){
                 console.log(err);
             }
             if(model){
@@ -32,13 +32,13 @@ module.exports = {
                 //Create a workbook object
                 var wb = { SheetNames:[], Sheets:{} };
 
-                // add worksheet to workbook 
+                // add worksheet to workbook
                 wb.SheetNames.push(ws_name);
                 wb.Sheets[ws_name] = ws;
                 // write workbook object into a xlsx file
                 var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:true, type: 'binary'});
                 res.send(wbout);
-            }    
+            }
         });
     },
     getLiveInstanceData: function(req,res){
@@ -46,7 +46,7 @@ module.exports = {
         var revision = req.query.currentRevision;
 
         ProcedureModel.findOne( { 'procedureID' : id}, function(err, model) {
-            if(err){ 
+            if(err){
                 console.log(err);
             }
 
@@ -69,7 +69,7 @@ module.exports = {
         var id = req.query.procedureID;
 
         ProcedureModel.findOne( { 'procedureID' : id }, function(err, model) {
-            if(err){ 
+            if(err){
                 console.log(err);
             }
             var allinstances = {};
@@ -93,11 +93,15 @@ module.exports = {
             var workbook = XLSX.readFile(filepath);
             var sheet1 = XLSX.utils.sheet_to_json(workbook.Sheets.Sheet1);
             var userdetails = req.body.userdetails;
+            var errordetails = ""
 
             // File Upload Validations
+            console.log("Validating new file upload:")
             var fileverify = 0
 
             // check if all steps have step,type,content
+            // console.log(" - Number of lines: " + sheet1.length)
+            // console.log(" - Checking for required columns [Step, Role, Type]")
             for(var a=0;a<sheet1.length;a++){
                 //if(sheet1[a].Step && sheet1[a].Role && sheet1[a].Type && sheet1[a].Content){
                 if(sheet1[a].Step && sheet1[a].Role && sheet1[a].Type && sheet1[a].Content){
@@ -106,13 +110,15 @@ module.exports = {
                     sheet1[a].Type = sheet1[a].Type.replace(/\s/g, '');
                     fileverify++;
                 }
+                else {
+                    errordetails = "Line " + (fileverify+2)
+                    console.log(" - ERROR: Missing field in " + errordetails )
+                }
             }
 
-
             if(fileverify === sheet1.length){
-                //To check if Type is valid
-                   //Check spellings and ignore case
-                        //It Should be one of 'Action','Caution','Decision','Heading','Info','Record','Verify','Warning'.
+                //To check if Type is valid, check spellings and ignore case
+                //It Should be one of 'Action','Caution','Decision','Heading','Info','Record','Verify','Warning'.
                 var stepsValidity = 0;
                 var errorTypeSteps = [];
                 for(var b=0;b<sheet1.length;b++){
@@ -178,7 +184,7 @@ module.exports = {
                                 }
                             }
                         }
-                    
+
                         if(headingErr.length > 0 && nonHeadingErr.length > 0){
                             res.json({error_code:3,err_desc:"Not a valid Step",err_dataHeading:headingErr,err_dataNonHeading:nonHeadingErr});
                         }else if(headingErr.length > 0 && nonHeadingErr.length === 0){
@@ -207,12 +213,12 @@ module.exports = {
                     res.json({error_code:0,err_desc:"Not a valid file"});
                 }
             }else {
-                res.json({error_code:0,err_desc:"Not a valid file"});
+                res.json({error_code:0,err_desc:"Missing field",err_detail:errordetails});
             }
             //End of Validations
 
 
-            //If everything is valid 
+            //If everything is valid
             if(fileverify === sheet1.length && errorTypeSteps.length === 0 && headingErr.length === 0 && nonHeadingErr.length === 0 && roleErrSteps.length === 0 && sheet1[sheet1.length-1].Type.toUpperCase() !== 'HEADING'){
 
                 ProcedureModel.findOne({ 'procedureID' : filename[0] }, function(err, procs) {
@@ -224,7 +230,7 @@ module.exports = {
                         var ptitle = filename[2].split(".");
                         procs.procedureID = filename[0];
                         procs.title = filename[1]+" - "+ptitle[0];
-                        
+
                         if(procs.versions && procs.versions.length > 0){
                             procs.versions.push(sheet1);
                         }else if(procs.versions && procs.versions.length === 0){
@@ -238,7 +244,7 @@ module.exports = {
                         }
                         procs.sections = [];
                         for(var i=0;i<sheet1.length;i++){
-                            procs.sections.push(sheet1[i]); 
+                            procs.sections.push(sheet1[i]);
                         }
                         procs.updatedBy = userdetails;
                         procs.save(function(err,result) {
@@ -264,9 +270,9 @@ module.exports = {
                         pfiles.versions = [];
 
                         for(var i=0;i<sheet1.length;i++){
-                            pfiles.sections.push(sheet1[i]); 
+                            pfiles.sections.push(sheet1[i]);
                         }
-                        
+
                         pfiles.versions.push(pfiles.sections);
 
                         pfiles.eventname = filename[1];
@@ -362,7 +368,7 @@ module.exports = {
                     if(j === step){
                         instance[j].info = info;
                         if(steptype === 'Input'){
-                           instance[j].recordedValue = recordedValue; 
+                           instance[j].recordedValue = recordedValue;
                         }
                         break;
                     }
@@ -380,7 +386,7 @@ module.exports = {
                     if(result){
                         res.send(result);
                     }
-                    
+
                 });
 
             }
@@ -419,7 +425,7 @@ module.exports = {
                     if(result){
                         res.send(result);
                     }
-                    
+
                 });
             }
 
@@ -469,7 +475,7 @@ module.exports = {
                     if(result){
                        res.send(result);
                     }
-                    
+
                 });
             }
 
@@ -484,7 +490,7 @@ module.exports = {
         var liveinstanceID;
 
         ProcedureModel.findOne( { 'procedureID' : procid }, function(err, procs) {
-            if(err){ 
+            if(err){
                 console.log(err);
             }
 
@@ -545,7 +551,7 @@ module.exports = {
                     if(result){
                        res.send({status:status});
                     }
-                    
+
                 });
             }
         });
@@ -555,7 +561,7 @@ module.exports = {
         var prevProcId = req.body.procId
 
         ProcedureModel.findOne( { 'procedureID' : prevProcId }, function(err, procs) {
-            if(err){ 
+            if(err){
                 console.log(err);
             }
 
@@ -571,7 +577,7 @@ module.exports = {
                     if(result){
                        res.send(result);
                     }
-                    
+
                 });
             }
         });
@@ -611,7 +617,7 @@ module.exports = {
                 for(var a=0;a<parentsArray.length;a++){
                     instance[parentsArray[a].index].info = info;
                     if(parentsArray[a].parent.contenttype === 'Input'){
-                        instance[parentsArray[a].index].recordedValue = inputStepValues[parentsArray[a].index].ivalue; 
+                        instance[parentsArray[a].index].recordedValue = inputStepValues[parentsArray[a].index].ivalue;
                     }
                 }
 
@@ -628,7 +634,7 @@ module.exports = {
                     if(result){
                         res.send(result);
                     }
-                    
+
                 });
 
             }

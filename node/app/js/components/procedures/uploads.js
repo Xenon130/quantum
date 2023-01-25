@@ -72,7 +72,7 @@ quantum.controller('uploadCtrl',function($scope,$uibModal,procedureService,timeS
 
     //If the name format and if the file is an xlsx file then this function is called
     //to validate the contents and save in the database and display success or error messages
-    // Validation is executed by function in procedure.controller js file in server folder of the project
+    // Validation executes in: node > server > controllers > procedure.controller.js > uploadFile
     //This function is also used to update the procedure.
     $scope.upload = function(file,userdetails) {
         Upload.upload({
@@ -436,12 +436,11 @@ quantum.controller('uploadCtrl',function($scope,$uibModal,procedureService,timeS
                     $scope.config = {};
                     $scope.upload_form.$setPristine();
                 });
-            }
-            else if(resp.data.error_code === 0 && resp.data.err_desc === "Not a valid file"){
+            }else if(resp.data.error_code === 0 && resp.data.err_desc === "Missing field"){
                 var position = "top left";
                 var queryId = '#toaster';
-                var delay = 5000;
-                $scope.usermessage = 'Error: Not a valid file.Required Columns are Step,Type,Role,Content!';
+                var delay = 10000;
+                $scope.usermessage = `Error: ${resp.data.err_desc} in ${resp.data.err_detail}; [Step,Type,Role,Content] are required`;
                 var alertstatus = procedureService.displayAlert($scope.usermessage,position,queryId,delay);
                 if(alertstatus === true){
                     $scope.config = {};
