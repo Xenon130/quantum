@@ -1,4 +1,4 @@
-//Define user roles
+// Define valid user roles & call-signs
 // https://en.wikipedia.org/wiki/Flight_controller#Common_flight_control_positions
 module.exports = {
 

@@ -1,8 +1,10 @@
 var mongoose = require('mongoose');
 var ProcedureModel = mongoose.model('procedure');
 var XLSX = require("xlsx");
-var configRole = require('../../config/role');
-var validTypes = ['ACTION','CAUTION','DECISION','HEADING','INFO','RECORD','VERIFY','WARNING'];
+var configRole = require('../../config/role')
+var configStep = require('../../config/step')
+var validTypes = Object.keys(configStep.types);
+// var validTypes = ['ACTION','CAUTION','DECISION','HEADING','INFO','RECORD','VERIFY','WARNING'];
 
 module.exports = {
     getProcedureList: function(req, res){
